@@ -643,6 +643,11 @@ footer>div button:hover,footer>div button:focus-visible,
   .hero-content .quote-card label{min-width:0}
   .hero-content .quote-card input,
   .hero-content .quote-card textarea{height:46px!important}
+  .hero-content .quote-card{row-gap:10px!important;padding:18px 24px 14px!important;align-content:stretch!important}
+  .hero-content .quote-card label{margin:0!important;line-height:1.1!important}
+  .hero-content .quote-card input,
+  .hero-content .quote-card textarea{height:40px!important;margin-top:5px!important;padding:8px 12px!important}
+  .hero-content .quote-card .submit-button{height:44px!important;margin-top:0!important;padding:8px!important}
 }
 @media(max-width:800px){
   .site-header.is-scrolled{background:#fff!important;box-shadow:0 2px 14px rgba(0,0,0,.16)!important}
