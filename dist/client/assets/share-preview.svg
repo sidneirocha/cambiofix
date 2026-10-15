@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ff101b"/>
+  <circle cx="1040" cy="-70" r="310" fill="#d60818" opacity=".5"/>
+  <circle cx="1100" cy="640" r="330" fill="#ff3340" opacity=".35"/>
+  <image x="90" y="95" width="440" height="440" preserveAspectRatio="xMidYMid meet" xlink:href="favicon.png"/>
+  <text x="620" y="270" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700">câmbiofix</text>
+  <text x="625" y="345" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600">Oficina especializada em câmbio</text>
+  <rect x="625" y="390" width="112" height="6" rx="3" fill="#ffffff"/>
+</svg>
