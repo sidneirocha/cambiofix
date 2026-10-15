@@ -467,9 +467,9 @@ footer>div button:hover,footer>div button:focus-visible,
 .contact-main>a:hover,.contact-main>a:focus-visible{transform:translateY(-2px)}
 .post-art{
   background-position:center;
-  background-size:contain;
+  background-size:cover;
   background-repeat:no-repeat;
-  background-color:#f3f3f3;
+  background-color:#181818;
   padding:0;
 }
 
