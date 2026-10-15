@@ -664,7 +664,8 @@ footer>div button:hover,footer>div button:focus-visible,
   .hero-content .quote-card label{margin:0!important;line-height:1.1!important}
   .hero-content .quote-card input,
   .hero-content .quote-card textarea{height:40px!important;margin-top:5px!important;padding:8px 12px!important}
-  .hero-content .quote-card{grid-template-rows:60px 60px 44px 24px!important;row-gap:8px!important;align-content:start!important}
+  .hero-content .quote-card{grid-template-rows:60px 60px 44px 24px!important;row-gap:14px!important;align-content:start!important}
+  .hero-content .quote-card.quote-card--idle{grid-template-rows:60px 60px 44px!important;row-gap:14px!important;align-content:center!important}
   .hero-content .quote-card .submit-button{height:44px!important;margin-top:0!important;padding:8px!important}
 }
 @media(max-width:800px){
