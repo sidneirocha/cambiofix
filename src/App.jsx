@@ -25,9 +25,9 @@ const brands = ["brand-1.png", "brand-2.png", "brand-3.png", "brand-4.png", "bra
 const serviceImages = ["iBhPxqyvR2R5JWcRe9ylvJSsbI.png", "KJT1aRtYMe0kv6uRevU1uyWgyE8.png", "V9IFbpXENfrcMHEKoMj36nTQjA.png", "service-diagnostic.png", "service-clutch.png", "service-transmission.png"];
 const instagramImages = ["instagram-post-1.jpg", "instagram-post-2.jpg", "instagram-post-3.jpg"];
 const heroTopics = [
-  "Especialistas em câmbio automático",
-  "Leva e traz e guincho na Zona Oeste",
-  "Conserte seu câmbio em até 12x/18x",
+  "Especialistas em câmbio automático com diagnóstico preciso.",
+  "Leva e traz e guincho na Zona Oeste de São Paulo.",
+  "Conserte seu câmbio em até 12x.",
 ];
 const osascoGallery = [
   ["unidade-osasco-01.png", "Área principal de atendimento"],
@@ -135,14 +135,13 @@ export function App() {
         <section id="home" className="hero">
           <div className="hero-overlay" />
           <div className="hero-content">
-            <div className="hero-copy"><h1><span className="hero-title-topic" key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span><br /><span className="hero-title-base">com diagnóstico preciso.</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
+            <div className="hero-copy"><h1><span className="hero-title-topic" key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
             <form className="quote-card" onSubmit={handleQuoteSubmit}>
               <label>Nome<input required name="nome" placeholder="Seu nome" /></label>
               <label>Telefone<input required name="telefone" placeholder="(DDD) 55555-5555" /></label>
               <label>Modelo do carro<input required name="modelo" placeholder="Modelo" /></label>
               <label>Assunto<input required name="assunto" placeholder="O que deseja orçar?" /></label>
               <button className="submit-button" type="submit">{submitted ? "Mensagem pronta!" : "Solicitar orçamento"}</button>
-              <div className="hero-response">◉ &nbsp; Retorno rápido via WhatsApp</div>
               {submitted && <p className="form-note">Agora é só falar com a equipe pelo WhatsApp.</p>}
             </form>
             <div className="hero-benefits"><div><b>⌾</b><span><strong>Diagnóstico preciso</strong><small>Equipamentos e tecnologia avançada</small></span></div><div><b>✦</b><span><strong>Equipe especializada</strong><small>Profissionais com experiência no mercado</small></span></div><div><b>◷</b><span><strong>Atendimento ágil</strong><small>Orçamento rápido e sem compromisso</small></span></div></div>

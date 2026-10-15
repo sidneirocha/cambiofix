@@ -247,10 +247,9 @@ footer>.haus-logo{display:inline-flex;flex-direction:column;align-items:flex-sta
 /* Hero dinâmico e formulário horizontal no desktop. */
 .hero-copy h1 .hero-title-topic{
   display:inline-block;
-  color:var(--red);
+  color:#fff;
   animation:hero-topic-in .45s ease both;
 }
-.hero-copy h1 .hero-title-base{color:#fff}
 @keyframes hero-topic-in{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:translateY(0)}
@@ -271,7 +270,8 @@ footer>.haus-logo{display:inline-flex;flex-direction:column;align-items:flex-sta
 @media(min-width:801px){
   .quote-card{
     flex:none;
-    width:min(900px,calc(100vw - 8.4vw));
+    width:50vw;
+    max-width:920px;
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:14px 18px;
     padding:22px 26px 16px;
