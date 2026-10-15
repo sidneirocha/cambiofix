@@ -135,7 +135,7 @@ export function App() {
         <section id="home" className="hero">
           <div className="hero-overlay" />
           <div className="hero-content">
-            <div className="hero-copy"><h1><span className="hero-title-topic" key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
+            <div className="hero-copy"><h1><span className={`hero-title-topic${heroTopics[heroTopic].length > 40 ? " is-long" : ""}`} key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
             <form className="quote-card" onSubmit={handleQuoteSubmit}>
               <label>Nome<input required name="nome" placeholder="Seu nome" /></label>
               <label>Telefone<input required name="telefone" placeholder="(DDD) 55555-5555" /></label>

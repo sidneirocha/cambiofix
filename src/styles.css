@@ -619,6 +619,15 @@ footer>div button:hover,footer>div button:focus-visible,
 /* Mobile overrides kept last so they win over the legacy responsive rules above. */
 /* FINAL-MOBILE-OVERRIDES */
 @media(min-width:801px){
+  .hero-copy{max-width:1000px}
+  .hero-copy h1 .hero-title-topic{display:block;max-width:100%}
+  .hero-copy h1 .hero-title-topic.is-long{
+    font-size:clamp(40px,3.7vw,56px);
+    line-height:1.04;
+    letter-spacing:-2px;
+  }
+}
+@media(min-width:801px){
   .hero-content .quote-card{
     width:600px!important;
     min-width:600px!important;
