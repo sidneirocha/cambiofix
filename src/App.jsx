@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const whatsapp = "https://wa.me/5511968194802";
 const quoteWhatsapp = "https://wa.me/5511980350415";
+const quoteCooldownMs = 30_000;
 const mapUrl = "https://www.google.com/maps/@-23.5876044,-46.7634829,3a,90y,20.02h,94.54t/data=!3m7!1e1!3m5!1s2uRT6I1ZnyuyQIniW0AbMg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-4.5443908442523195%26panoid%3D2uRT6I1ZnyuyQIniW0AbMg%26yaw%3D20.01680526404629!7i16384!8i8192?entry=ttu";
 const osascoMapUrl = "https://www.google.com/maps/search/?api=1&query=R.%20Antônio%20Alves%20Ribeiro%2C%201365%20-%20Jardim%20Munhoz%20Junior%20-%20Osasco";
 
@@ -42,11 +43,20 @@ function Logo({ light = false }) {
   return <a className="logo" href="#home" aria-label="Câmbiofix início"><img src={light ? "/assets/logo.svg" : "/assets/logo-light.svg"} alt="câmbiofix" /></a>;
 }
 
+function cleanQuoteValue(value, maxLength) {
+  return String(value || "")
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+}
+
 export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [service, setService] = useState(0);
   const [openFaq, setOpenFaq] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [quoteStatus, setQuoteStatus] = useState("idle");
+  const [quoteFeedback, setQuoteFeedback] = useState("");
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [servicesPaused, setServicesPaused] = useState(false);
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(null);
@@ -101,18 +111,82 @@ export function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleQuoteInvalid = (event) => {
+    const fieldLabels = { nome: "seu nome", telefone: "seu telefone", modelo: "o modelo do carro", assunto: "o assunto" };
+    setQuoteStatus("error");
+    setQuoteFeedback(`Confira ${fieldLabels[event.target.name] || "os campos do formulário"}.`);
+  };
+
+  const handleQuoteFocus = () => {
+    if (quoteStatus === "error" || quoteStatus === "blocked") {
+      setQuoteStatus("idle");
+      setQuoteFeedback("");
+    }
+  };
+
   const handleQuoteSubmit = (event) => {
     event.preventDefault();
+    if (quoteStatus === "sending") return;
+
+    const form = event.currentTarget;
     const data = new FormData(event.currentTarget);
+    if (String(data.get("website") || "").trim()) return;
+    if (!form.checkValidity()) {
+      setQuoteStatus("error");
+      setQuoteFeedback("Preencha os campos obrigatórios para continuar.");
+      form.reportValidity();
+      return;
+    }
+
+    const nome = cleanQuoteValue(data.get("nome"), 80);
+    const telefone = cleanQuoteValue(data.get("telefone"), 18);
+    const modelo = cleanQuoteValue(data.get("modelo"), 80);
+    const assunto = cleanQuoteValue(data.get("assunto"), 160);
+    const phoneDigits = telefone.replace(/\D/g, "");
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      setQuoteStatus("error");
+      setQuoteFeedback("Digite um telefone válido com DDD.");
+      form.elements.telefone.focus();
+      return;
+    }
+
+    const now = Date.now();
+    let lastSubmit = 0;
+    try {
+      lastSubmit = Number(window.sessionStorage.getItem("cambiofix:quote:last-submit") || 0);
+    } catch {
+      lastSubmit = 0;
+    }
+    if (lastSubmit && now - lastSubmit < quoteCooldownMs) {
+      const seconds = Math.ceil((quoteCooldownMs - (now - lastSubmit)) / 1000);
+      setQuoteStatus("blocked");
+      setQuoteFeedback(`Aguarde ${seconds}s antes de enviar outro pedido.`);
+      return;
+    }
+
+    setQuoteStatus("sending");
+    setQuoteFeedback("Abrindo o WhatsApp…");
     const message = [
       "Olá! Quero solicitar um orçamento para meu veículo.",
-      `Nome: ${data.get("nome")}`,
-      `Telefone: ${data.get("telefone")}`,
-      `Modelo: ${data.get("modelo")}`,
-      `Assunto: ${data.get("assunto")}`,
+      `Nome: ${nome}`,
+      `Telefone: ${telefone}`,
+      `Modelo: ${modelo}`,
+      `Assunto: ${assunto}`,
     ].join("\n");
-    window.open(`${quoteWhatsapp}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-    setSubmitted(true);
+    const whatsappWindow = window.open(`${quoteWhatsapp}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    if (!whatsappWindow) {
+      setQuoteStatus("error");
+      setQuoteFeedback("O navegador bloqueou a nova aba. Permita pop-ups para abrir o WhatsApp.");
+      return;
+    }
+    try {
+      window.sessionStorage.setItem("cambiofix:quote:last-submit", String(now));
+    } catch {
+      // O bloqueio por sessão é uma camada extra; o envio continua funcionando sem storage.
+    }
+    setQuoteStatus("success");
+    setQuoteFeedback("WhatsApp aberto. A equipe já pode receber sua solicitação.");
+    form.reset();
   };
 
   return (
@@ -136,13 +210,14 @@ export function App() {
           <div className="hero-overlay" />
           <div className="hero-content">
             <div className="hero-copy"><h1><span className={`hero-title-topic${heroTopics[heroTopic].length > 40 ? " is-long" : ""}`} key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
-            <form className="quote-card" onSubmit={handleQuoteSubmit}>
-              <label>Nome<input required name="nome" placeholder="Seu nome" /></label>
-              <label>Telefone<input required name="telefone" placeholder="(DDD) 55555-5555" /></label>
-              <label>Modelo do carro<input required name="modelo" placeholder="Modelo" /></label>
-              <label>Assunto<input required name="assunto" placeholder="O que deseja orçar?" /></label>
-              <button className="submit-button" type="submit">{submitted ? "Mensagem pronta!" : "Solicitar orçamento"}</button>
-              {submitted && <p className="form-note">Agora é só falar com a equipe pelo WhatsApp.</p>}
+            <form className={`quote-card quote-card--${quoteStatus}`} onSubmit={handleQuoteSubmit} onInvalid={handleQuoteInvalid} onFocusCapture={handleQuoteFocus} aria-describedby="quote-feedback">
+              <div className="quote-honeypot" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex="-1" autoComplete="off" /></div>
+              <label>Nome<input required minLength="2" maxLength="80" autoComplete="name" name="nome" placeholder="Seu nome" /></label>
+              <label>Telefone<input required minLength="10" maxLength="18" inputMode="tel" autoComplete="tel" name="telefone" placeholder="(DDD) 55555-5555" /></label>
+              <label>Modelo do carro<input required minLength="2" maxLength="80" autoComplete="off" name="modelo" placeholder="Modelo" /></label>
+              <label>Assunto<input required minLength="4" maxLength="160" autoComplete="off" name="assunto" placeholder="O que deseja orçar?" /></label>
+              <button className="submit-button" type="submit" disabled={quoteStatus === "sending"} aria-busy={quoteStatus === "sending"}>{quoteStatus === "sending" ? "Abrindo WhatsApp…" : quoteStatus === "success" ? "WhatsApp aberto" : "Solicitar orçamento"}</button>
+              <p id="quote-feedback" className={`quote-feedback quote-feedback--${quoteStatus}`} role="status" aria-live="polite">{quoteFeedback || "\u00a0"}</p>
             </form>
             <div className="hero-benefits"><div><b>⌾</b><span><strong>Diagnóstico preciso</strong><small>Equipamentos e tecnologia avançada</small></span></div><div><b>✦</b><span><strong>Equipe especializada</strong><small>Profissionais com experiência no mercado</small></span></div><div><b>◷</b><span><strong>Atendimento ágil</strong><small>Orçamento rápido e sem compromisso</small></span></div></div>
           </div>

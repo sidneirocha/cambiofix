@@ -618,6 +618,20 @@ footer>div button:hover,footer>div button:focus-visible,
 
 /* Mobile overrides kept last so they win over the legacy responsive rules above. */
 /* FINAL-MOBILE-OVERRIDES */
+.quote-honeypot{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.quote-card label{transition:color .2s ease}
+.quote-card label:focus-within{color:#fff}
+.quote-card input,.quote-card textarea{transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+.quote-card input:focus-visible,.quote-card textarea:focus-visible{outline:none;border-color:#ff5360;box-shadow:0 0 0 3px rgba(255,16,33,.2);background:rgba(255,255,255,.2)}
+.quote-card input:user-invalid{border-color:#ff8b91;box-shadow:0 0 0 2px rgba(255,16,33,.16)}
+.quote-card--success{border-color:rgba(9,196,58,.8)!important}
+.quote-card--error,.quote-card--blocked{border-color:rgba(255,117,125,.9)!important}
+.quote-card--sending{border-color:rgba(255,255,255,.65)!important}
+.quote-feedback{grid-column:1 / -1;min-width:0;margin:0;color:#d4d4d4;font-size:11px;line-height:24px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quote-feedback--success{color:#8be8a2}
+.quote-feedback--error,.quote-feedback--blocked{color:#ffb0b5}
+.submit-button{transition:background-color .2s ease,transform .2s ease,opacity .2s ease}
+.submit-button:disabled{cursor:wait;opacity:.72;transform:none!important}
 @media(min-width:801px){
   .hero-copy{max-width:1000px}
   .hero-copy h1 .hero-title-topic{display:block;max-width:100%}
@@ -647,6 +661,7 @@ footer>div button:hover,footer>div button:focus-visible,
   .hero-content .quote-card label{margin:0!important;line-height:1.1!important}
   .hero-content .quote-card input,
   .hero-content .quote-card textarea{height:40px!important;margin-top:5px!important;padding:8px 12px!important}
+  .hero-content .quote-card{grid-template-rows:60px 60px 44px 24px!important;row-gap:8px!important;align-content:start!important}
   .hero-content .quote-card .submit-button{height:44px!important;margin-top:0!important;padding:8px!important}
 }
 @media(max-width:800px){
@@ -687,6 +702,7 @@ footer>div button:hover,footer>div button:focus-visible,
   .hero-content{min-height:900px;padding:132px 20px 32px;align-items:stretch;justify-content:flex-end;flex-direction:column;gap:0}
   .quote-card{flex-basis:auto;width:100%;padding:22px 20px 20px}
   .quote-card h1{font-size:22px;text-align:left}
+  .quote-feedback{grid-column:1;font-size:11px;line-height:18px;white-space:normal;min-height:18px}
   .hero-promise{margin:0 0 14px;padding:20px 20px 19px}
   .hero-promise h2{font-size:30px}
   .about{display:flex;flex-direction:column;gap:0;padding:76px 20px 70px;min-height:0}
