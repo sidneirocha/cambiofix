@@ -28,6 +28,7 @@
   font-family:var(--framer-font-family);
 }
 
+
 /* Desktop hero composition aligned to the supplied reference. */
 .hero-content{display:grid;grid-template-columns:minmax(360px,1fr) minmax(560px,760px);grid-template-rows:auto auto;align-content:center;gap:26px 52px;max-width:none;padding:150px 4.2vw 70px}
 .hero-copy{grid-column:1 / -1;max-width:820px}
@@ -243,6 +244,7 @@ footer>.haus-logo{display:inline-flex;flex-direction:column;align-items:flex-sta
   footer>.logo,footer>div,footer>.haus-logo{margin-left:auto;margin-right:auto}
   footer>div{justify-content:center}
 }
+
 
 /* Último override do formulário desktop: vence as regras legadas anteriores. */
 @media(min-width:801px){
@@ -615,6 +617,24 @@ footer>div button:hover,footer>div button:focus-visible,
 }
 
 /* Mobile overrides kept last so they win over the legacy responsive rules above. */
+/* FINAL-MOBILE-OVERRIDES */
+@media(max-width:800px){
+  .site-header.is-scrolled{background:#fff!important;box-shadow:0 2px 14px rgba(0,0,0,.16)!important}
+  .site-header.is-scrolled .logo img{filter:none!important}
+  .site-header.is-scrolled .menu-toggle span{background:#171717!important}
+  .site-header.menu-is-open{background:#fff!important}
+  .site-header.menu-is-open .header-actions{background:#fff!important}
+  .site-header.menu-is-open .nav-links.is-open{background:#fff!important;box-shadow:0 12px 20px rgba(0,0,0,.16)!important}
+  .site-header.menu-is-open .nav-links.is-open button{color:#171717!important;border-bottom-color:rgba(0,0,0,.12)!important}
+  .site-header.menu-is-open .menu-toggle span{background:#171717!important}
+  .service-track{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;width:100%!important;height:auto!important;animation:none!important;transform:none!important}
+  .service-card,.service-card.is-active{width:auto!important;min-width:0!important;height:180px!important;flex:none!important;flex-grow:0!important}
+  .callout{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:64px 20px 70px!important;min-height:0!important}
+  .callout-art{position:static!important;width:170px!important;height:210px!important;margin:0 auto 26px!important}
+  .callout>div{margin:0!important}
+  .callout .button{position:static!important;align-self:flex-start!important;margin-top:28px!important}
+  .social .post-grid{display:none!important}
+}
 @media(max-width:800px){
   .site-header{z-index:20;background:rgba(8,8,8,.18);backdrop-filter:blur(10px)}
   .site-header:not(.is-scrolled){background:rgba(8,8,8,.18)}
