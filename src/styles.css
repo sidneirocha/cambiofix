@@ -660,6 +660,8 @@ footer>div button:hover,footer>div button:focus-visible,
   .callout>div{margin:0!important}
   .callout .button{position:static!important;align-self:flex-start!important;margin-top:28px!important}
   .social .post-grid{display:none!important}
+  .about{padding-bottom:0!important}
+  .about-art{position:static!important;display:block!important;order:2;width:100%!important;height:auto!important;max-height:340px;margin:30px 0 0!important;object-fit:cover;object-position:center}
 }
 @media(max-width:800px){
   .site-header{z-index:20;background:rgba(8,8,8,.18);backdrop-filter:blur(10px)}
