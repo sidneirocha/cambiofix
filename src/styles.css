@@ -662,6 +662,12 @@ footer>div button:hover,footer>div button:focus-visible,
   .social .post-grid{display:none!important}
   .about{padding-bottom:0!important}
   .about-art{position:static!important;display:block!important;order:2;width:100%!important;height:auto!important;max-height:340px;margin:30px 0 0!important;object-fit:cover;object-position:center}
+  .dna-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:34px 14px!important;margin-top:48px!important}
+  .dna-grid article{min-width:0!important}
+  .dna-grid .dna-icon{width:100px!important;height:100px!important;margin-bottom:16px!important}
+  .dna-grid .dna-icon img{padding:23px!important}
+  .dna-grid h3{font-size:18px!important;line-height:1.15!important;margin:0 0 8px!important}
+  .dna-grid p{font-size:12px!important;line-height:1.5!important}
 }
 @media(max-width:800px){
   .site-header{z-index:20;background:rgba(8,8,8,.18);backdrop-filter:blur(10px)}
