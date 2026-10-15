@@ -24,7 +24,7 @@ const faq = [
 
 const brands = ["brand-1.png", "brand-2.png", "brand-3.png", "brand-4.png", "brand-5.png", "brand-6.png"];
 const serviceImages = ["iBhPxqyvR2R5JWcRe9ylvJSsbI.png", "KJT1aRtYMe0kv6uRevU1uyWgyE8.png", "V9IFbpXENfrcMHEKoMj36nTQjA.png", "service-diagnostic.png", "service-clutch.png", "service-transmission.png"];
-const instagramImages = ["instagram-post-1.jpg", "instagram-post-2.jpg", "instagram-post-3.jpg"];
+const instagramImages = ["instagram-post-1.png", "instagram-post-2.png", "instagram-post-3.png"];
 const heroTopics = [
   "Especialistas em câmbio automático com diagnóstico preciso.",
   "Leva e traz e guincho na Zona Oeste de São Paulo.",
