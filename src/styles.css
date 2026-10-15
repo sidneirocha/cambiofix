@@ -640,6 +640,9 @@ footer>div button:hover,footer>div button:focus-visible,
     line-height:1.04;
     letter-spacing:-2px;
   }
+  .about-art{width:46%!important}
+  .about>div:nth-child(2){position:relative;z-index:1;min-width:0}
+  .about p{max-width:none;overflow-wrap:break-word}
 }
 @media(min-width:801px){
   .hero-content .quote-card{
