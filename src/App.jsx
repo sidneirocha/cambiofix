@@ -217,7 +217,7 @@ export function App() {
               <label>Modelo do carro<input required minLength="2" maxLength="80" autoComplete="off" name="modelo" placeholder="Modelo" /></label>
               <label>Assunto<input required minLength="4" maxLength="160" autoComplete="off" name="assunto" placeholder="O que deseja orçar?" /></label>
               <button className="submit-button" type="submit" disabled={quoteStatus === "sending"} aria-busy={quoteStatus === "sending"}>{quoteStatus === "sending" ? "Abrindo WhatsApp…" : quoteStatus === "success" ? "WhatsApp aberto" : "Solicitar orçamento"}</button>
-              <p id="quote-feedback" className={`quote-feedback quote-feedback--${quoteStatus}`} role="status" aria-live="polite">{quoteFeedback || "\u00a0"}</p>
+              {quoteFeedback && <p id="quote-feedback" className={`quote-feedback quote-feedback--${quoteStatus}`} role="status" aria-live="polite">{quoteFeedback}</p>}
             </form>
             <div className="hero-benefits"><div><b>⌾</b><span><strong>Diagnóstico preciso</strong><small>Equipamentos e tecnologia avançada</small></span></div><div><b>✦</b><span><strong>Equipe especializada</strong><small>Profissionais com experiência no mercado</small></span></div><div><b>◷</b><span><strong>Atendimento ágil</strong><small>Orçamento rápido e sem compromisso</small></span></div></div>
           </div>
