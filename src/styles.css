@@ -271,16 +271,16 @@ footer>.haus-logo{display:inline-flex;flex-direction:column;align-items:flex-sta
 /* Mobile menu: high contrast, clear hierarchy and no overlap with the hero. */
 @media(max-width:800px){
   .site-header{height:82px;padding:0 20px;background:transparent}
-  .site-header.menu-is-open{background:#080808;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+  .site-header.menu-is-open{background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.16)}
   .site-header.menu-is-open .logo img{filter:none}
-  .site-header.menu-is-open .menu-toggle span{background:#fff}
+  .site-header.menu-is-open .menu-toggle span{background:#171717}
   .logo{width:184px}
   .menu-toggle{width:42px;height:42px;padding:8px;border:1px solid rgba(255,255,255,.35);border-radius:6px}
   .menu-toggle span{width:24px;margin:4px auto}
-  .site-header.menu-is-open .header-actions{top:82px;padding:14px 20px 12px;background:#080808}
+  .site-header.menu-is-open .header-actions{top:82px;padding:14px 20px 12px;background:#fff}
   .site-header.menu-is-open .header-actions .button{min-height:48px;border-radius:9px}
-  .site-header.menu-is-open .nav-links.is-open{top:144px;padding:0 20px 18px;background:#080808;box-shadow:0 12px 20px rgba(0,0,0,.3)}
-  .site-header.menu-is-open .nav-links.is-open button{color:#fff;text-align:left;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+  .site-header.menu-is-open .nav-links.is-open{top:144px;padding:0 20px 18px;background:#fff;box-shadow:0 12px 20px rgba(0,0,0,.16)}
+  .site-header.menu-is-open .nav-links.is-open button{color:#171717;text-align:left;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.12)}
   .site-header.menu-is-open .nav-links.is-open button:last-child{border-bottom:0}
 }
 

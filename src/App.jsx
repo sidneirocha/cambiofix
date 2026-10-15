@@ -118,7 +118,7 @@ export function App() {
   return (
     <div className="site-shell">
       <header className={`${headerScrolled ? "site-header is-scrolled" : "site-header"}${menuOpen ? " menu-is-open" : ""}`}>
-        <Logo light={menuOpen || !headerScrolled} />
+        <Logo light={!headerScrolled && !menuOpen} />
         <nav className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Navegação principal">
           {[['home', 'Home'], ['aempresa', 'A Empresa'], ['servicos', 'Serviços'], ['contato', 'Contato']].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)}>{label}</button>
