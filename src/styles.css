@@ -245,6 +245,103 @@ footer>.haus-logo{display:inline-flex;flex-direction:column;align-items:flex-sta
   footer>div{justify-content:center}
 }
 
+/* Mobile quote wizard: keep the hero focused on one field at a time. */
+.quote-mobile-progress,
+.quote-mobile-controls{display:none}
+@media(max-width:800px){
+  .hero-content .quote-card{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto!important;
+    gap:0!important;
+    align-content:start!important;
+    padding:18px 20px 16px!important;
+  }
+  .quote-mobile-progress{
+    display:flex;
+    grid-column:1;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:16px;
+    color:#d7d7d7;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .quote-progress-track{
+    width:100%;
+    height:4px;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+  }
+  .quote-progress-track span{
+    display:block;
+    height:100%;
+    border-radius:inherit;
+    background:var(--red);
+    transition:width .25s ease;
+  }
+  .hero-content .quote-card .quote-field{
+    display:none!important;
+    grid-column:1;
+    margin:0!important;
+  }
+  .hero-content .quote-card .quote-field.is-active{
+    display:block!important;
+  }
+  .quote-mobile-controls{
+    display:grid;
+    grid-column:1;
+    grid-template-columns:auto 1fr;
+    gap:10px;
+    margin-top:16px;
+  }
+  .quote-back-button,
+  .quote-next-button{
+    min-height:44px;
+    padding:8px 14px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:9px;
+    color:#fff;
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+  }
+  .quote-back-button{
+    background:transparent;
+  }
+  .quote-back-button:disabled{
+    cursor:default;
+    opacity:.36;
+  }
+  .quote-next-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--red);
+  }
+  .quote-next-button span{font-size:17px;line-height:1}
+  .hero-content .quote-card .quote-mobile-submit{
+    min-height:44px;
+    height:44px!important;
+    margin:0!important;
+    padding:8px!important;
+  }
+  .hero-content .quote-card .quote-desktop-submit{
+    display:none!important;
+  }
+  .hero-content .quote-card .quote-feedback{
+    grid-column:1;
+    min-height:18px;
+    margin-top:8px;
+    line-height:18px;
+    white-space:normal;
+  }
+}
+
 
 /* Último override do formulário desktop: vence as regras legadas anteriores. */
 @media(min-width:801px){

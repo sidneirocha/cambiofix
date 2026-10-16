@@ -30,6 +30,12 @@ const heroTopics = [
   "Leva e traz e guincho na Zona Oeste de São Paulo.",
   "Conserte seu câmbio em até 12x.",
 ];
+const quoteSteps = [
+  { name: "nome", label: "Nome", prompt: "seu nome" },
+  { name: "telefone", label: "Telefone", prompt: "seu telefone" },
+  { name: "modelo", label: "Modelo do carro", prompt: "o modelo do carro" },
+  { name: "assunto", label: "Assunto", prompt: "o assunto" },
+];
 const osascoGallery = [
   ["unidade-osasco-01.png", "Área principal de atendimento"],
   ["unidade-osasco-02.png", "Espaço técnico da unidade"],
@@ -61,6 +67,7 @@ export function App() {
   const [servicesPaused, setServicesPaused] = useState(false);
   const [selectedGalleryImage, setSelectedGalleryImage] = useState(null);
   const [heroTopic, setHeroTopic] = useState(0);
+  const [quoteStep, setQuoteStep] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setHeaderScrolled(window.scrollY > 24);
@@ -122,6 +129,27 @@ export function App() {
       setQuoteStatus("idle");
       setQuoteFeedback("");
     }
+  };
+
+  const handleQuoteNext = (event) => {
+    const form = event.currentTarget.form;
+    const step = quoteSteps[quoteStep];
+    const field = form?.elements[step.name];
+    if (!field?.checkValidity()) {
+      setQuoteStatus("error");
+      setQuoteFeedback(`Confira ${step.prompt}.`);
+      field?.reportValidity();
+      return;
+    }
+    setQuoteStatus("idle");
+    setQuoteFeedback("");
+    setQuoteStep((current) => Math.min(current + 1, quoteSteps.length - 1));
+  };
+
+  const handleQuoteBack = () => {
+    setQuoteStatus("idle");
+    setQuoteFeedback("");
+    setQuoteStep((current) => Math.max(current - 1, 0));
   };
 
   const handleQuoteSubmit = (event) => {
@@ -187,6 +215,7 @@ export function App() {
     setQuoteStatus("success");
     setQuoteFeedback("WhatsApp aberto. A equipe já pode receber sua solicitação.");
     form.reset();
+    setQuoteStep(0);
   };
 
   return (
@@ -212,11 +241,16 @@ export function App() {
             <div className="hero-copy"><h1><span className={`hero-title-topic${heroTopics[heroTopic].length > 40 ? " is-long" : ""}`} key={heroTopics[heroTopic]}>{heroTopics[heroTopic]}</span></h1><p>Atendimento técnico, orçamento rápido e confiança para seu veículo.</p></div>
             <form className={`quote-card quote-card--${quoteStatus}`} onSubmit={handleQuoteSubmit} onInvalid={handleQuoteInvalid} onFocusCapture={handleQuoteFocus} aria-describedby="quote-feedback">
               <div className="quote-honeypot" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex="-1" autoComplete="off" /></div>
-              <label>Nome<input required minLength="2" maxLength="80" autoComplete="name" name="nome" placeholder="Seu nome" /></label>
-              <label>Telefone<input required minLength="10" maxLength="18" inputMode="tel" autoComplete="tel" name="telefone" placeholder="(DDD) 55555-5555" /></label>
-              <label>Modelo do carro<input required minLength="2" maxLength="80" autoComplete="off" name="modelo" placeholder="Modelo" /></label>
-              <label>Assunto<input required minLength="4" maxLength="160" autoComplete="off" name="assunto" placeholder="O que deseja orçar?" /></label>
-              <button className="submit-button" type="submit" disabled={quoteStatus === "sending"} aria-busy={quoteStatus === "sending"}>{quoteStatus === "sending" ? "Abrindo WhatsApp…" : quoteStatus === "success" ? "WhatsApp aberto" : "Solicitar orçamento"}</button>
+              <div className="quote-mobile-progress" aria-live="polite"><span>Etapa {quoteStep + 1} de {quoteSteps.length}</span><div className="quote-progress-track" aria-hidden="true"><span style={{ width: `${((quoteStep + 1) / quoteSteps.length) * 100}%` }} /></div></div>
+              <label className={`quote-field quote-field--nome${quoteStep === 0 ? " is-active" : ""}`}>Nome<input required minLength="2" maxLength="80" autoComplete="name" name="nome" placeholder="Seu nome" /></label>
+              <label className={`quote-field quote-field--telefone${quoteStep === 1 ? " is-active" : ""}`}>Telefone<input required minLength="10" maxLength="18" inputMode="tel" autoComplete="tel" name="telefone" placeholder="(DDD) 55555-5555" /></label>
+              <label className={`quote-field quote-field--modelo${quoteStep === 2 ? " is-active" : ""}`}>Modelo do carro<input required minLength="2" maxLength="80" autoComplete="off" name="modelo" placeholder="Modelo" /></label>
+              <label className={`quote-field quote-field--assunto${quoteStep === 3 ? " is-active" : ""}`}>Assunto<input required minLength="4" maxLength="160" autoComplete="off" name="assunto" placeholder="O que deseja orçar?" /></label>
+              <div className="quote-mobile-controls">
+                <button className="quote-back-button" type="button" onClick={handleQuoteBack} disabled={quoteStep === 0}>Voltar</button>
+                {quoteStep < quoteSteps.length - 1 ? <button className="quote-next-button" type="button" onClick={handleQuoteNext}>Próximo <span>→</span></button> : <button className="submit-button quote-mobile-submit" type="submit" disabled={quoteStatus === "sending"} aria-busy={quoteStatus === "sending"}>{quoteStatus === "sending" ? "Abrindo WhatsApp…" : quoteStatus === "success" ? "WhatsApp aberto" : "Solicitar orçamento"}</button>}
+              </div>
+              <button className="submit-button quote-desktop-submit" type="submit" disabled={quoteStatus === "sending"} aria-busy={quoteStatus === "sending"}>{quoteStatus === "sending" ? "Abrindo WhatsApp…" : quoteStatus === "success" ? "WhatsApp aberto" : "Solicitar orçamento"}</button>
               {quoteFeedback && <p id="quote-feedback" className={`quote-feedback quote-feedback--${quoteStatus}`} role="status" aria-live="polite">{quoteFeedback}</p>}
             </form>
             <div className="hero-benefits"><div><b>⌾</b><span><strong>Diagnóstico preciso</strong><small>Equipamentos e tecnologia avançada</small></span></div><div><b>✦</b><span><strong>Equipe especializada</strong><small>Profissionais com experiência no mercado</small></span></div><div><b>◷</b><span><strong>Atendimento ágil</strong><small>Orçamento rápido e sem compromisso</small></span></div></div>
