@@ -57,6 +57,12 @@ function cleanQuoteValue(value, maxLength) {
     .slice(0, maxLength);
 }
 
+function reportWhatsAppConversion() {
+  if (typeof window !== "undefined" && typeof window.gtag_report_conversion === "function") {
+    window.gtag_report_conversion();
+  }
+}
+
 export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [service, setService] = useState(0);
@@ -207,6 +213,7 @@ export function App() {
       setQuoteFeedback("O navegador bloqueou a nova aba. Permita pop-ups para abrir o WhatsApp.");
       return;
     }
+    reportWhatsAppConversion();
     try {
       window.sessionStorage.setItem("cambiofix:quote:last-submit", String(now));
     } catch {
@@ -228,7 +235,7 @@ export function App() {
           ))}
         </nav>
         <div className="header-actions">
-          <a className="button button-green" href={whatsapp} target="_blank" rel="noreferrer"><img className="whatsapp-icon" src="/assets/whatsapp.png" alt="" /> WhatsApp</a>
+          <a className="button button-green" href={whatsapp} target="_blank" rel="noreferrer" onClick={reportWhatsAppConversion}><img className="whatsapp-icon" src="/assets/whatsapp.png" alt="" /> WhatsApp</a>
           <a className="button button-light" href="tel:5511968194802">Ligar: 11 96819-4802</a>
         </div>
         <button className="menu-toggle" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><span /><span /><span /></button>
@@ -263,13 +270,13 @@ export function App() {
 
         <section id="servicos" className="services section-dark" onMouseEnter={() => setServicesPaused(true)} onMouseLeave={() => setServicesPaused(false)} onFocusCapture={() => setServicesPaused(true)} onBlurCapture={() => setServicesPaused(false)}><div className="services-intro"><div><div className="section-kicker">SERVIÇOS</div><h2>O que fazemos<br />de melhor</h2></div><p className="services-description">Descubra nossos serviços de qualidade e eficiência para atender suas necessidades. Com opções variadas, garantimos sua satisfação em cada serviço realizado.</p></div><div className="service-copy"><div className="service-cards"><div className="service-track">{services.map((item, index) => <button key={item.title} className={index === service ? "service-card is-active" : "service-card"} onMouseEnter={() => setService(index)} onFocus={() => setService(index)} onClick={() => setService(index)} aria-pressed={index === service}><img src={`/assets/${serviceImages[index]}`} alt={item.title} /><span>{item.title}</span></button>)}</div></div></div></section>
 
-        <section className="callout"><img className="callout-art" src="/assets/service-detail.png" alt="" /><div><h2>Confie na Câmbiofix<br />para cuidar do seu câmbio</h2><p>Entre em contato agora mesmo e agende o seu serviço!</p></div><a className="button button-red" href={whatsapp} target="_blank" rel="noreferrer">Agende uma conversa <span>↗</span></a></section>
+        <section className="callout"><img className="callout-art" src="/assets/service-detail.png" alt="" /><div><h2>Confie na Câmbiofix<br />para cuidar do seu câmbio</h2><p>Entre em contato agora mesmo e agende o seu serviço!</p></div><a className="button button-red" href={whatsapp} target="_blank" rel="noreferrer" onClick={reportWhatsAppConversion}>Agende uma conversa <span>↗</span></a></section>
 
         <section className="feature"><img src="/assets/quality-wordmark.png" alt="Câmbiofix em movimento" /></section>
 
         <section className="dna section-light"><div className="dna-head"><div className="section-kicker">DIFERENCIAIS</div><div><h2>Nosso DNA</h2><p>Aprimoramos nossos serviços para garantir qualidade, profissionais capacitados, atendimento ágil, garantia e excelência no reparo do seu veículo. Conte conosco!</p></div></div><div className="dna-grid">{[['Custo benefício','Traga seu orçamento para análise. Podemos negociar, fazemos o melhor preço.'],['Equipe','Conte com nossa equipe de profissionais altamente capacitados para atender diversos casos. Confie em nós.'],['Equipamentos e produtos','Utilização de produtos e equipamentos de qualidade, visando a conservação do seu veículo.'],['Diagnóstico Honesto','Nosso compromisso é com a transparência. Você saberá exatamente qual é o problema e qual a solução mais eficiente e econômica.'],['Garantia Total','Todos os nossos reparos e peças possuem garantia, proporcionando tranquilidade e confiança no nosso trabalho.'],['Especialização Comprovada','Nossa equipe vive e respira transmissão automática. Somos focados em resolver o seu problema de câmbio.']].map(([title, text], index) => <article key={title}><div className="dna-icon"><img src="/assets/dna-card.png" alt="" /></div><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
 
-        <section className="quality"><div><div className="section-kicker">QUALIDADE QUE ENTREGA</div><h2>Invista na qualidade</h2><p>Confie em nossa equipe especializada para realizar a retífica do seu câmbio e garanta um desempenho impecável.</p></div><a className="button button-red" href={whatsapp} target="_blank" rel="noreferrer">Contratar agora <span>↗</span></a></section>
+        <section className="quality"><div><div className="section-kicker">QUALIDADE QUE ENTREGA</div><h2>Invista na qualidade</h2><p>Confie em nossa equipe especializada para realizar a retífica do seu câmbio e garanta um desempenho impecável.</p></div><a className="button button-red" href={whatsapp} target="_blank" rel="noreferrer" onClick={reportWhatsAppConversion}>Contratar agora <span>↗</span></a></section>
 
         <section className="social section-light"><div className="section-kicker">REDES SOCIAIS</div><h2>Siga a Câmbiofix no Instagram</h2><a className="instagram-link" href="https://www.instagram.com/cambiofixoficina/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a><div className="post-grid">{['DObPLojjczX','DObO7N0jTjp','DObO3jSjWgx'].map((post, index) => <a key={post} className="post-card" href={`https://www.instagram.com/p/${post}/`} target="_blank" rel="noreferrer"><div className="post-art" style={{backgroundImage:`url('/assets/${instagramImages[index]}')`}} /><strong>cambiofixoficina</strong><small>{index + 3} curtidas · Ver mais no Instagram</small></a>)}</div><img className="instagram-art" src="/assets/contact-detail.png" alt="" /></section>
 
@@ -277,7 +284,7 @@ export function App() {
 
         <section className="faq section-light"><div className="section-kicker">DÚVIDAS?</div><h2>Perguntas frequentes</h2><div className="faq-list">{faq.map(([question, answer], index) => <div className={openFaq === index ? "faq-item is-open" : "faq-item"} key={question}><button onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><b>{openFaq === index ? "−" : "+"}</b></button>{openFaq === index && <p>{answer}</p>}</div>)}</div></section>
 
-        <section id="contato" className="contact"><div className="contact-main"><div className="section-kicker">CONTATO</div><h2>Agende uma visita<br />agora mesmo</h2><a href={whatsapp} target="_blank" rel="noreferrer"><strong>Contato:</strong><br /><span>11 96819-4802</span> ↗</a></div><div className="contact-details"><div><strong>Horário de funcionamento:</strong><p>Seg a Sex das 09h as 18h</p></div><div><strong>E-mail:</strong><p>contato@cambiofix.com.br</p></div><div><strong>Unidades:</strong><a href={mapUrl} target="_blank" rel="noreferrer">Av. Eng. Heitor Antônio Eiras Garcia, 3534 — Jardim Esmeralda ↗</a><a href={osascoMapUrl} target="_blank" rel="noreferrer">R. Antônio Alves Ribeiro, 1365 — Jardim Munhoz Junior — Osasco ↗</a></div></div></section>
+        <section id="contato" className="contact"><div className="contact-main"><div className="section-kicker">CONTATO</div><h2>Agende uma visita<br />agora mesmo</h2><a href={whatsapp} target="_blank" rel="noreferrer" onClick={reportWhatsAppConversion}><strong>Contato:</strong><br /><span>11 96819-4802</span> ↗</a></div><div className="contact-details"><div><strong>Horário de funcionamento:</strong><p>Seg a Sex das 09h as 18h</p></div><div><strong>E-mail:</strong><p>contato@cambiofix.com.br</p></div><div><strong>Unidades:</strong><a href={mapUrl} target="_blank" rel="noreferrer">Av. Eng. Heitor Antônio Eiras Garcia, 3534 — Jardim Esmeralda ↗</a><a href={osascoMapUrl} target="_blank" rel="noreferrer">R. Antônio Alves Ribeiro, 1365 — Jardim Munhoz Junior — Osasco ↗</a></div></div></section>
       </main>
       <footer><Logo light /><div><button onClick={() => scrollTo('home')}>Home</button><button onClick={() => scrollTo('aempresa')}>A Empresa</button><button onClick={() => scrollTo('servicos')}>Serviços</button><button onClick={() => scrollTo('contato')}>Contato</button></div><a className="haus-logo" href="https://haus.art.br" target="_blank" rel="noreferrer">Desenvolvido por: haus.art.br</a><span>© Câmbiofix 2025</span></footer>
       {selectedGalleryImage && <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={selectedGalleryImage.caption} onClick={() => setSelectedGalleryImage(null)}><button type="button" className="gallery-close" aria-label="Fechar imagem" onClick={() => setSelectedGalleryImage(null)}>×</button><img src={`/assets/osasco/${selectedGalleryImage.image}`} alt={`${selectedGalleryImage.caption} — nova unidade Câmbiofix Osasco`} onClick={(event) => event.stopPropagation()} /><p>{selectedGalleryImage.caption} · Nova unidade Osasco</p></div>}
